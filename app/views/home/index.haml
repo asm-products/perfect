@@ -1,12 +1,45 @@
-%div.page-1.page
-  %h1 Perfect
-  %p Send a postcard with ease.
-  %button Get Started
+.reveal
+  .slides
+    %section
+      %h1 Perfect
+      %p Send a postcard with ease.
+      %button.zbutton.next Get Started
 
-%div.page-2.page
-  %h2 Choose an image
+    %section
+      %h3 Choose a card
+      .cards
+        %img.card{src: '/assets/postcard-1.png'}
+        %img.card{src: '/assets/postcard-2.png'}
+        %img.card{src: '/assets/postcard-3.png'}
 
-%div.page-3.page
-  %h2 Write your message
+    %section
+      %h3 Write your message
+      %textarea.message{name: 'message'}
+      %button.zbutton.next Where should we send it?
 
-  %button Send now
+    %section
+      %h3 Tell us who it's going to
+      %form.destination
+        .field
+          %label{for: 'name'} Name
+          %input{name: 'name'}
+        .field
+          %label{for: 'address1'} Address Line 1
+          %input{name: 'address1'}
+        .field
+          %label{for: 'address2'} Address Line 2
+          %input{name: 'address2'}
+        .field
+          %label{for: 'city'} City
+          %input{name: 'city'}
+        .field
+          %label{for: 'state'} State
+          %input{name: 'state'}
+        .field
+          %label{for: 'country'} Country
+          %input{name: 'country'}
+        .field
+          %label{for: 'zip'} Zip
+          %input{name: 'zip'}
+
+      %button.zbutton Send now

@@ -12,21 +12,3 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require lib/parallax.min
-//= require_tree .
-
-for(x=0;x<4;x++){
-  parallax.add("page-"+x, $(".page-" + x))
-}
-
-parallax.background = $("body");
-parallax.scaling = 0.4; //background moves 40% with the pages
-
-$(document).ready( function(){
-  $(".page").each( function(i, v){
-    console.log($(window).height())
-    console.log($(v).height())
-    console.log(($(window).height()-$(v).height())/2)
-    $(v).css('margin-top', ($(window).height()-$(v).height())/2)
-  })
-})
