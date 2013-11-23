@@ -1,0 +1,27 @@
+---
+hoffman_@2X.png: hoffman_@2X-950e5794d653573370f8e3381a6d73a5.png
+hoffman_@2X/index.png: hoffman_@2X-950e5794d653573370f8e3381a6d73a5.png
+postcard-1.pdf: postcard-1-46fd3882bc8c97a66801369ca4bb0bf0.pdf
+postcard-1/index.pdf: postcard-1-46fd3882bc8c97a66801369ca4bb0bf0.pdf
+postcard-1.png: postcard-1-983c918cfe4b983b544742b01c3e7445.png
+postcard-1/index.png: postcard-1-983c918cfe4b983b544742b01c3e7445.png
+postcard-2.pdf: postcard-2-e33a7ecda5670ea121ec86326bbfc8fa.pdf
+postcard-2/index.pdf: postcard-2-e33a7ecda5670ea121ec86326bbfc8fa.pdf
+postcard-2.png: postcard-2-7167eb604e74097023eb26c3bb28ea4c.png
+postcard-2/index.png: postcard-2-7167eb604e74097023eb26c3bb28ea4c.png
+postcard-3.pdf: postcard-3-be809c4f13981593c4b3e383bade6a69.pdf
+postcard-3/index.pdf: postcard-3-be809c4f13981593c4b3e383bade6a69.pdf
+postcard-3.png: postcard-3-78498e3efefe8448538f2642338e900a.png
+postcard-3/index.png: postcard-3-78498e3efefe8448538f2642338e900a.png
+rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
+rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
+square-image.png: square-image-c53796853cf3c9b46389d25085ff8f29.png
+square-image/index.png: square-image-c53796853cf3c9b46389d25085ff8f29.png
+application.js: application-c40db0881cadc87aaf8fb6f981c5dddc.js
+application/index.js: application-c40db0881cadc87aaf8fb6f981c5dddc.js
+bottom.js: bottom-60c05b3593bf5f28dc2d51ff071d7222.js
+bottom/index.js: bottom-60c05b3593bf5f28dc2d51ff071d7222.js
+application.css: application-b6899cbf6008e92ccb9131c90b6fbb23.css
+application/index.css: application-b6899cbf6008e92ccb9131c90b6fbb23.css
+jquery.min.map: jquery.min-6336c5bca4c709e809647cdfcb484d0a.map
+jquery/index.min.map: jquery.min-6336c5bca4c709e809647cdfcb484d0a.map

@@ -1,5 +1,7 @@
 Perfect::Application.routes.draw do
   root to: 'home#index'
+
+  post '/make_postcard' => 'home#make_postcard'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

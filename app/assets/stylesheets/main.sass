@@ -1,6 +1,17 @@
 body
   font-family: 'Montserrat Alternates', sans-serif
   background: url('hoffman_@2X.png') repeat
+  .flash
+    text-align: center
+    padding: 16px
+    font-size: 20px
+    background-color: white
+    border: 1px solid black
+    color: black
+    &.alert
+      color: red
+    &.js
+      display: none
 
 .reveal
   font-size: 14px
@@ -8,15 +19,27 @@ body
     font-size: 4em
   h1
     font-size: 10em
+    display: inline
   h3
     font-size: 3em
+    display: inline
+  h4
+    font-size: 2em
   .zbutton
+    font-family: 'Montserrat Alternates', sans-serif
     font-size: 40px
     padding: 20px 40px
     background: transparent
     border: 1px solid black
     margin-top: 30px
     cursor: pointer
+    &.small
+      padding: 10px 20px
+      font-size: 20px
+      display: inline
+      position: relative
+      top: -16px
+      margin-left: 40px
   img.card
     width: 425px
     padding: 10px
