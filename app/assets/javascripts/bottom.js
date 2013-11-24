@@ -26,6 +26,7 @@ var handler = StripeCheckout.configure({
     image: '/assets/square-image.png',
     token: function(token, args) {
       $("#payment_token").val(token.id)
+      maskLoad()
       $(".destination").submit()
     }
   });
@@ -71,7 +72,6 @@ $(".flash").click( function(){
 
 
 $(".purchase").click( function(e){
-  console.log($("#email").val())
   e.preventDefault()
   if(allOptionsComplete()){
     if($("#country").val() == "US"){
@@ -126,3 +126,12 @@ function addressFormComplete(){
   return $(".destination")[0].checkValidity()
 }
 
+
+function maskLoad(){
+  $('body').prepend('<div class="loading-mask"><div class="processing-message">Processing<br><br><i class="fa fa-spinner fa-spin"></i></div></div>')
+  $(".processing-message").css('top', $(document).height()/2)
+}
+
+function unmaskLoad(){
+  $(".loading-mask").remove()
+}

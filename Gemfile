@@ -18,6 +18,7 @@ gem 'haml'
 gem 'lob'
 gem 'carmen-rails', '~> 1.0.0'
 gem 'stripe'
+gem 'font-awesome-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
