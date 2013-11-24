@@ -175,3 +175,20 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-45980938-1', 'postperfect.co');
 ga('send', 'pageview');
 
+
+$(document).ready(function() {
+  $(".fancybox").fancybox({
+    maxWidth  : 800,
+    maxHeight : 150,
+    fitToView : false,
+    width   : '70%',
+    height    : '70%',
+    autoSize  : false,
+    closeClick  : false,
+    openEffect  : 'none',
+    closeEffect : 'none'
+  });
+  if($(".flash").text() == "Your postcard was created successfully. It should arrive in a few days!"){
+    $(".fancybox").trigger('click');
+  }
+});

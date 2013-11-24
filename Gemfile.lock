@@ -49,6 +49,8 @@ GEM
     coffee-script-source (1.6.3)
     erubis (2.7.0)
     execjs (2.0.2)
+    fancybox2-rails (0.2.5)
+      railties (>= 3.1.0)
     font-awesome-rails (4.0.1.0)
       railties (>= 3.2, < 5.0)
     haml (4.0.4)
@@ -142,6 +144,7 @@ DEPENDENCIES
   aws-sdk
   carmen-rails (~> 1.0.0)
   coffee-rails (~> 3.2.1)
+  fancybox2-rails (~> 0.2.4)
   font-awesome-rails
   haml
   jquery-rails

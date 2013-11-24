@@ -19,6 +19,7 @@ gem 'lob'
 gem 'carmen-rails', '~> 1.0.0'
 gem 'stripe'
 
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -31,6 +32,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'modernizr-rails'
   gem 'font-awesome-rails'
+  gem 'fancybox2-rails', '~> 0.2.4'
 end
 
 gem 'jquery-rails'
