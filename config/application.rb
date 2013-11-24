@@ -12,6 +12,12 @@ end
 Lob.api_key = ENV['LOB_API_KEY']
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
+AWS.config(
+    :access_key_id     => ENV['AWS_KEY_ID'], 
+    :secret_access_key => ENV['AWS_SECRET_KEY']
+)
+
+
 module Perfect
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

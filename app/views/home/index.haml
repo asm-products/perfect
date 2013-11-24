@@ -6,13 +6,24 @@
       %h4 $2 to the US | $3 to everywhere else
       %button.zbutton.next Get Started
 
-    %section
-      %h3 Choose a card
-      %button.zbutton.small.prev Or go back
-      .cards
-        %img.card{src: '/assets/postcard-1.png'}
-        %img.card{src: '/assets/postcard-2.png'}
-        %img.card{src: '/assets/postcard-3.png'}
+    %section.all-cards{data: {current: 0}}
+      -s3 = AWS::S3.new
+      -s3.buckets['post-perfect'].objects.with_prefix('postcards').map{|a| a.key.split("/")[1]}.uniq.each do |category|
+        -cards = s3.buckets['post-perfect'].objects.with_prefix('postcards').select{|u| u.key[category] && u.key['.png']}
+        -cards.each_slice(4).with_index do |row, i|
+          %section.card-section{data: {background: s3.buckets['post-perfect'].objects.with_prefix('postcards').select{|u| u.key[category] && u.key['.png'] && u.key['background']}}}
+            %h3 Choose a card
+            %button.zbutton.small.prev Or go back
+            .category-titles
+              .previous-page
+                %i.fa.fa-arrow-circle-o-left
+              .category-name
+                =category.split("-").map{|name| name.capitalize}.join(" ") + " "+ (i+1).to_s
+              .next-page
+                %i.fa.fa-arrow-circle-o-right
+            .cards
+              -row.each do |card|
+                %img.card{src: "http://s3.amazonaws.com/post-perfect/#{card.key[0..-5]}.png?AWSAccessKeyId=#{ENV['AWS_KEY_ID']}"}
 
     %section
       %h3 Write your message

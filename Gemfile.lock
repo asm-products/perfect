@@ -29,6 +29,11 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     arel (3.0.3)
+    aws-sdk (1.6.2)
+      httparty (~> 0.7)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
+      uuidtools (~> 2.1)
     builder (3.0.4)
     carmen (1.0.0)
       unicode_utils (~> 1.4.0)
@@ -49,6 +54,9 @@ GEM
     haml (4.0.4)
       tilt
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.6.5)
     journey (1.0.4)
     jquery-rails (3.0.4)
@@ -61,7 +69,12 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25)
+    mini_portile (0.5.1)
+    modernizr-rails (2.7.0)
     multi_json (1.8.2)
+    multi_xml (0.5.4)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     pg (0.17.0)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -120,17 +133,20 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode_utils (1.4.0)
+    uuidtools (2.1.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk
   carmen-rails (~> 1.0.0)
   coffee-rails (~> 3.2.1)
   font-awesome-rails
   haml
   jquery-rails
   lob
+  modernizr-rails
   pg
   rails (= 3.2.14)
   rails_12factor

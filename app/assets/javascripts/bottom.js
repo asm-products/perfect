@@ -34,19 +34,50 @@ var handler = StripeCheckout.configure({
 
 
 $(".next").click( function(){
-  Reveal.next();
+  Reveal.right();
+  paginate()
 })
 
 $(".prev").click( function(){
-  Reveal.prev();
+  Reveal.left();
+  paginate()
 })
+
+$(".next-page").click(function(){
+  Reveal.down()
+  paginate()
+})
+
+$(".previous-page").click(function(){
+  Reveal.up()
+  paginate()
+})
+
+function paginate(){
+  if($(".card-section").length == (Reveal.getIndices().v + 1)){
+    $(".next-page").hide()
+    $(".previous-page").css('display', 'inline-block')
+  }else if(1 == (Reveal.getIndices().v + 1)){
+    $(".next-page").css('display', 'inline-block')
+    $(".previous-page").hide()
+  }else{
+    $(".next-page").css('display', 'inline-block')
+    $(".previous-page").css('display', 'inline-block')
+  }
+}
+
+paginate()
+
+Reveal.addEventListener( 'slidechanged', function( event ) {
+  paginate()
+} );
 
 $(".card").click( function(e){
   $(".card").removeClass('selected')
   $(e.currentTarget).addClass('selected')
   $('.photo-chosen').val($(e.currentTarget).attr('src'))
   $("textarea.message").focus()
-  Reveal.next();
+  Reveal.slide( 2, 0, 0);
 })
 
 $(".where").click( function(){
@@ -135,3 +166,12 @@ function maskLoad(){
 function unmaskLoad(){
   $(".loading-mask").remove()
 }
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-45980938-1', 'postperfect.co');
+ga('send', 'pageview');
+

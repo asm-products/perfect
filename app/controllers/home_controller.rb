@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
   def index
+
   end
 
   def make_postcard
@@ -33,7 +34,7 @@ class HomeController < ApplicationController
         {
           from: ENV['POST_PERFECT_ADDRESS'],
           message: params[:final_message] + "\n\nSent by www.postperfect.co",
-          front: "https://dl.dropboxusercontent.com/u/38199/" + params[:photo_chosen].gsub('/assets/', '')[0..-5] + '.pdf'
+          front: params[:photo_chosen].gsub(".png", ".pdf")
         }
       )
       flash[:notice] = "Your postcard was created successfully. It should arrive in a few days!"
