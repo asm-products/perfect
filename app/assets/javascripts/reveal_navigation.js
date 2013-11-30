@@ -19,32 +19,29 @@ Reveal.initialize({
 })
 
 Reveal.addEventListener( 'slidechanged', function( event ) {
-  paginate_cards()
+  paginate_card_arrows()
 } );
-
 
 // Navigation
 $(".next").click( function(){
   Reveal.right();
-  paginate()
 })
 
 $(".prev").click( function(){
   Reveal.left();
-  paginate()
 })
 
 $(".next-page").click(function(){
   Reveal.down()
-  paginate()
+  paginate_card_arrows()
 })
 
 $(".previous-page").click(function(){
   Reveal.up()
-  paginate_cards()
+  paginate_card_arrows()
 })
 
-function paginate_cards(){
+function paginate_card_arrows(){
   if($(".card-section").length == (Reveal.getIndices().v + 1)){
     $(".next-page").hide()
     $(".previous-page").css('display', 'inline-block')
@@ -56,5 +53,3 @@ function paginate_cards(){
     $(".previous-page").css('display', 'inline-block')
   }
 }
-
-paginate_cards()

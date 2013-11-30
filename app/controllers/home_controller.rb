@@ -6,30 +6,48 @@ class HomeController < ApplicationController
 
   def make_postcard
     send_card if charge_card
-    redirect_to root_path
+    redirect_to root_path(sanitized_params)
   end
 
   def share
 
   end
 
+  def check_discount
+    respond_to do |format|
+      format.json{
+        render json: discount ? discount : {}
+      }
+    end
+  end
+
 
   private
+
+  def discount
+    @discount ||= Discount.find_by_code(params[:discount])
+  end
 
   def charge_card
     token = params[:payment_token]
     price = params[:country] == "US" ? 200 : 300 
 
-    begin
-      charge = Stripe::Charge.create(
-        :amount => price,
-        :currency => "usd",
-        :card => token,
-        :description => params[:email]
-      )
-      flash[:notice] = "Your postcard was created successfully. It should arrive in a few days!"
-    rescue Stripe::CardError => e
-      flash[:notice] = "Your credit card was declined. Please try again with a different card."
+    price = discount.calculate_discount_price(price) if discount
+
+    if price == 0
+      flash[:notice] = "Your free post card is on the way. It should arrive in a few days!"
+    else
+      begin
+        charge = Stripe::Charge.create(
+          :amount => price,
+          :currency => "usd",
+          :card => token,
+          :description => params[:email]
+        )
+        flash[:notice] = "Your postcard was created successfully. It should arrive in a few days!"
+      rescue Stripe::CardError => e
+        flash[:alert] = "Your credit card was declined. Please try again with a different card."
+      end
     end
   end
 
@@ -56,4 +74,14 @@ class HomeController < ApplicationController
     )
   end
 
+  def sanitized_params
+    if flash[:alert].present?
+      [:action, :authenticity_token, :payment_token, :utf8].each do |param|
+        params.delete(param)
+      end
+      params
+    else
+      {}
+    end
+  end
 end

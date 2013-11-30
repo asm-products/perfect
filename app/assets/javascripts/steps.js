@@ -14,6 +14,5 @@ $(".where").click( function(){
   }else{
     $(".final-message").val($(".message").val())
     Reveal.next();
-    
   }
 })

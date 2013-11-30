@@ -11,16 +11,45 @@ var handler = StripeCheckout.configure({
 $(".purchase").click( function(e){
   e.preventDefault()
   if(allOptionsComplete()){
-    if($("#country").val() == "US"){
-      amount = 200
+    amount = calculate_amount()
+    if($("#discount").val() != ""){
+      $.get('/check_discount', {discount: $("#discount").val()}
+      ).done(function(data){
+        if(!$.isEmptyObject(data)){
+          amount = apply_discount(data, amount)
+          run_card(amount)
+          js_flash('Discount code ' + data.code + ' applied!')
+        }else{
+          $("#discount").val('')
+          js_flash('Discount code invalid.')
+        }
+      })
     }else{
-      amount = 300
+      run_card(amount)
     }
-    handler.open({
-      name: 'postperfect.co',
-      description: '1 postcard',
-      amount: amount,
-      email: $("#email").val()
-    });
+
   }
 })
+
+function run_card(amount){
+  handler.open({
+    name: 'postperfect.co',
+    description: '1 postcard',
+    amount: amount,
+    email: $("#email").val()
+  });
+}
+
+function calculate_amount(){
+  if($("#country").val() == "US"){
+    return 200
+  }else{
+    return 300
+  }
+}
+
+function apply_discount(object, price){
+  if(object.dtype == 'percent'){
+    return parseFloat(price)*(parseFloat(1-(object.amount/100)))
+  }
+}

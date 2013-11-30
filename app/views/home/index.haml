@@ -27,6 +27,7 @@
       %h3 Write your message
       %button.zbutton.small.prev Or go back
       %textarea.message#message{name: 'message', required: 'required', maxlength: 300}
+        =params[:final_message].present? ? params[:final_message] : ""
       %button.zbutton.where Where should we send it?
 
     %section
@@ -34,31 +35,34 @@
       %button.zbutton.small.prev Or go back
       =form_tag make_postcard_path, class: 'destination', parsley: {validate: true} do
         .field
-          %label{for: 'name'} Name
-          %input{name: 'name', required: 'required'}
+          =label_tag :name
+          =text_field_tag :name, params[:name], required: :required
         .field
-          %label{for: 'address1'} Address Line 1
-          %input{name: 'address1', required: 'required'}
+          =label_tag :address1, 'Address Line 1'
+          =text_field_tag :address1, params[:address1], required: :required
         .field
-          %label{for: 'address2'} Address Line 2
-          %input{name: 'address2'}
+          =label_tag :address2, 'Address Line 2'
+          =text_field_tag :address2, params[:address2]
         .field
-          %label{for: 'city'} City
-          %input{name: 'city', required: 'required'}
+          =label_tag :city
+          =text_field_tag :city, params[:city], required: :required
         .field
-          %label{for: 'state'} State
-          %input{name: 'state', required: 'required'}
+          =label_tag :state
+          =text_field_tag :state, params[:state], required: :required
         .field
-          %label{for: 'country'} Country
-          =select_tag :country, options_for_select(Carmen::Country.all.map{|c| [c.name, c.code]}, ['United States', 'US'])
+          =label_tag :country
+          =select_tag :country, options_for_select(Carmen::Country.all.map{|c| [c.name, c.code]}, (params[:country].present? ? params[:country] : ['United States', 'US']))
         .field
-          %label{for: 'zip'} Zip
-          %input{name: 'zip', required: 'required'}
+          =label_tag :zip
+          =text_field_tag :zip, params[:zip], required: :required
         .field
-          %label{for: 'email'} Your Email
-          %input#email{name: 'email', required: 'required'}
-        =hidden_field_tag :photo_chosen, nil, class: 'photo-chosen'
-        =hidden_field_tag :final_message, nil, class: 'final-message'
+          =label_tag :email, 'Your Email'
+          =text_field_tag :email, params[:email], required: :required, id: :email
+        .field
+          =label_tag :discount, 'Discount Code'
+          =text_field_tag :discount
+        =hidden_field_tag :photo_chosen, params[:photo_chosen], class: 'photo-chosen'
+        =hidden_field_tag :final_message, params[:final_message], class: 'final-message'
         =hidden_field_tag :payment_token
 
         %button.zbutton.purchase Send now

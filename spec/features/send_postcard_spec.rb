@@ -26,4 +26,23 @@ describe "the postcard sending process", :type => :feature do
     page.find(".flash").text.should eq("Your postcard was created successfully. It should arrive in a few days!")
   end
 
+  it "fails with an invalid discount code", js: true do
+    visit '/'
+    click_button 'Get Started'
+    all('.card').first.click
+    fill_in 'message', with: 'Hello World'
+    click_button 'Where should we send it?'
+    fill_in 'name', with: 'John Smith'
+    fill_in 'address1', with: '60 Washington Square South'
+    fill_in 'city', with: 'New York'
+    fill_in 'state', with: 'NY'
+    select 'United States', :from => 'country'
+    fill_in 'zip', with: '10012'
+    fill_in 'email', with: 'test@test.com'
+    fill_in 'discount', with: 'fji2o3jo2i'
+    click_button 'Send now'
+    sleep(4)
+    page.find(".flash").text.should eq("Discount code invalid.")
+  end
+
 end
