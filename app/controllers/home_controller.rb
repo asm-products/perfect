@@ -4,9 +4,23 @@ class HomeController < ApplicationController
 
   end
 
+  def new
+
+  end
+
   def make_postcard
-    send_card if charge_card
-    redirect_to root_path(sanitized_params)
+    begin
+      send_card if charge_card
+      respond_to do |format|
+        format.json{ render json: {status: 200} }
+        format.html{ redirect_to root_path(sanitized_params) }
+      end
+    rescue
+      respond_to do |format|
+        format.json{ render json: {status: 422}, :status => :unprocessable_entity}
+        format.html{ redirect_to root_path(sanitized_params) }
+      end
+    end
   end
 
   def share

@@ -1,5 +1,6 @@
 Perfect::Application.routes.draw do
   root to: 'home#index'
+  get '/new' => "home#new"
 
   post '/make_postcard' => 'home#make_postcard'
 
