@@ -10,6 +10,7 @@
  *
  *= require_self
  * require_tree .
+ *= require jquery.FlowupLabels
  *= require font-awesome
  *= require 'new'
  *= require fancybox

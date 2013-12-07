@@ -46,9 +46,16 @@ body
       height: 400px
       float: left
       background: #F6F6F6
+      opacity: .7
       .inner
         border-right: 1px solid #979797
         height: 366px
+        textarea
+          opacity: .4
+          outline: 0
+          background: #F6F6F6
+          font-size: 20px
+          height: 350px
     .right
       width: 300px
       height: 400px
@@ -74,8 +81,47 @@ body
         .lines
           display: inline-block
           width: 240px
-          margin-top: 100px
-          hr
-            margin-bottom: 40px
-            color: #979797
-            opacity: .4
+          margin-top: 40px
+          .line
+            float: left
+          .field
+            margin: 2px auto
+            position: relative
+            &.inline
+              width: 70px
+              display: inline-block
+            input
+              margin-bottom: 8px
+              border: 0
+              border-bottom: 1px solid #979797
+              opacity: .4
+              outline: 0
+              background: #F6F6F6
+              font-size: 20px
+              width: 240px
+              &.inline
+                width: 70px
+              &:selected
+                outline: 0
+            select
+              font-size: 16px
+              position: absolute
+              top: 12px
+              padding: 3px
+              margin: 0
+              -webkit-border-radius: 4px
+              -moz-border-radius: 4px
+              border-radius: 4px
+              -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset
+              -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset
+              box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset
+              background: #f8f8f8
+              color: #888
+              border: none
+              outline: none
+              display: inline-block
+              -webkit-appearance: none
+              -moz-appearance: none
+              appearance: none
+              cursor: pointer
+              

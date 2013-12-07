@@ -4,17 +4,45 @@
       .left
         &nbsp;
         .inner
-          &nbsp;
+          %textarea.message{maxlength: 300}
       .right
         .inner
           .stamp
             P
           .lines
-            %hr
-            %hr
-            %hr
-            %hr
-    %br
+            %form.FlowupLabels
+              .field
+                =label_tag :name
+                =text_field_tag :name, params[:name], required: :required
+              .field
+                =label_tag :address1, 'Address Line 1'
+                =text_field_tag :address1, params[:address1], required: :required
+              .field
+                =label_tag :address2, 'Address Line 2'
+                =text_field_tag :address2, params[:address2]
+              .line
+                .field.inline
+                  =label_tag :city
+                  =text_field_tag :city, params[:city], required: :required, class: 'inline'
+                .field.inline
+                  =label_tag :state
+                  =text_field_tag :state, params[:state], required: :required, class: 'inline'
+                .field.inline
+                  =select_tag :country, options_for_select(Carmen::Country.all.map{|c| [c.code, c.code]}, (params[:country].present? ? params[:country] : ['United States', 'US'])), class: 'inline'
+              .clear
+              .field
+                =label_tag :zip
+                =text_field_tag :zip, params[:zip], required: :required
+              / .field
+              /   =label_tag :email, 'Your Email'
+              /   =text_field_tag :email, params[:email], required: :required, id: :email
+              / .field
+              /   =label_tag :discount, 'Discount Code'
+              /   =text_field_tag :discount
+              =hidden_field_tag :photo_chosen, params[:photo_chosen], class: 'photo-chosen'
+              =hidden_field_tag :final_message, params[:final_message], class: 'final-message'
+              =hidden_field_tag :payment_token
+    %br 
     %br
     .clear
     .logotype

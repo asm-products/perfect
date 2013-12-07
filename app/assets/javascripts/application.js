@@ -14,3 +14,16 @@
 //= require jquery_ujs
 //= require lib/parsley
 //= require fancybox
+//= require lib/jquery.FlowupLabels
+
+$(document).ready(function(){
+  $(".field").addClass('fl_wrap')
+  $(".field label").addClass('fl_label')
+  $(".field input[type='text']").addClass('fl_input')
+  $('.FlowupLabels').FlowupLabels({
+        feature_onInitLoad: false,
+        class_focused:      'focused',
+        class_populated:    'populated' 
+  });
+})
+
