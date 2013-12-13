@@ -13,6 +13,8 @@ gem 'stripe'
 gem 'lob'
 gem 'aws-sdk'
 
+gem 'jquery-ui-rails'
+
 
 group :development do
   gem 'sqlite3'

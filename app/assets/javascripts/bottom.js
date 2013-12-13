@@ -1,4 +1,4 @@
-// = require javascript_flash.js
+
 // = require mask_loading.js
 // = require lib/reveal.min
 // = require steps.js

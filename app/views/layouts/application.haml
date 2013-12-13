@@ -10,8 +10,9 @@
     %script{src: 'https://checkout.stripe.com/checkout.js'}
     =render :partial => 'layouts/meta_content'
   %body
-    -flash.each do |key, value|
-      %div{class: "flash #{key}"}=value
-    .flash.js
+    .flash-wrapper
+      -flash.each do |key, value|
+        %div{class: "flash #{key}"}=value
+      .flash.js
     = yield
     =# javascript_include_tag "bottom"

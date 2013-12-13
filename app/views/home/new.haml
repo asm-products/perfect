@@ -1,5 +1,5 @@
 #perfect
-  #home
+  #home.page
     .card
       .left
         &nbsp;
@@ -45,7 +45,30 @@
     %br 
     %br
     .clear
+    .reverse-wrapper
+      %i.fa.fa-rotate-right.reverse
     .logotype
       Perfect
     .subheader
       Send postcards in the mail with ease
+
+  #options.page
+    .card-options
+      .buttons
+        %button.button
+          .text Upload an Image
+        %input.upload{type: 'file'}
+        %button.button
+          .text Take A Picture
+        %button.button
+          .text Steal One of Ours
+
+  #image-crop.page
+    .card-image-select
+      #thumbnail
+    .toolbar
+      %i.fa.fa-plus-square.zoom-in
+      %i.fa.fa-minus-square.zoom-out
+      %i.fa.fa-arrow-left.back
+
+   
