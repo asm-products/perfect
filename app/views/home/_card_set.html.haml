@@ -1,0 +1,2 @@
+-card = @cards.first
+%img.card.all-cards{src: card_url(card), data:{cards: @cards.map{|c| c.key}.join(", "), current: '0'}}

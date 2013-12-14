@@ -1,22 +1,7 @@
 module HomeHelper
-
-  def post_perfect_bucket
-    @post_perfect_bucket ||= AWS::S3.new.buckets['post-perfect'].objects.with_prefix('postcards')
+  
+  def card_url(card)
+    "https://s3.amazonaws.com/post-perfect/#{card.key[0..-5]}.png?AWSAccessKeyId=#{ENV['AWS_KEY_ID']}"
   end
-
-  def card_categories
-    post_perfect_bucket.map{|a| a.key.split("/")[1]}.uniq
-  end
-
-  def available_cards(category)
-    post_perfect_bucket.select{|u| u.key[category] && u.key['.png']}
-  end
-
-  def category_background(category)
-    post_perfect_bucket.select{|u| u.key[category] && u.key['.png'] && u.key['background']}
-  end
-
-  def category_name(category, i)
-    category.split("-").map{|name| name.capitalize}.join(" ") + " "+ (i+1).to_s
-  end
+  
 end

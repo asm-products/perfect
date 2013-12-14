@@ -21,14 +21,13 @@
                 =label_tag :address2, 'Address Line 2'
                 =text_field_tag :address2, params[:address2]
               .line
-                .field.inline
+                .field.inline.city
                   =label_tag :city
                   =text_field_tag :city, params[:city], required: :required, class: 'inline'
+                .field.inline.state
+                  =select_tag :state, 
                 .field.inline
-                  =label_tag :state
-                  =text_field_tag :state, params[:state], required: :required, class: 'inline'
-                .field.inline
-                  =select_tag :country, options_for_select(Carmen::Country.all.map{|c| [c.code, c.code]}, (params[:country].present? ? params[:country] : ['United States', 'US'])), class: 'inline'
+                  =select_tag :country, , class: 'inline'
               .clear
               .field
                 =label_tag :zip
@@ -58,9 +57,9 @@
         %button.button
           .text Upload an Image
         %input.upload{type: 'file'}
-        %button.button
-          .text Take A Picture
-        %button.button
+        / %button.button
+        /   .text Take A Picture
+        %button.button.steal
           .text Steal One of Ours
 
   #image-crop.page
@@ -71,4 +70,11 @@
       %i.fa.fa-minus-square.zoom-out
       %i.fa.fa-arrow-left.back
 
+  #image-select.page
+    .card-image-select
+    .choosers
+      %h3 Choose a category
+      %br
+      =select_tag :category, options_for_select(@card_categories)
+      =select_tag :card, options_for_select(@cards)
    

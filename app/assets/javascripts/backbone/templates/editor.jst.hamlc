@@ -1,0 +1,10 @@
+#editor.page
+  .card-image-select
+    #thumbnail
+  .toolbar
+    %i.fa.fa-plus-square.zoom-in
+    %i.fa.fa-minus-square.zoom-out
+    %button.button.looks-good
+      .text Looks good to me
+    %a{href: "#options"}
+      %i.fa.fa-arrow-left.back

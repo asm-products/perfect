@@ -1,0 +1,13 @@
+#image-select.page
+  .card-image-select
+    -card = @cards.first
+    %img.card.all-cards{src: card_url(card), data:{cards: @cards.map{|c| c.key}.join(", "), current: '0'}}
+
+  .choosers
+    %i.fa.fa-arrow-up.up
+    =select_tag :category, options_for_select(@card_categories)
+    %i.fa.fa-arrow-down.down
+    %br 
+    %br
+    %a{href: "#options"}
+      %i.fa.fa-arrow-left.back

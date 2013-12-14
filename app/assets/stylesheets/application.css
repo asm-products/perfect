@@ -9,10 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- * require_tree .
  *= require lib/jquery.FlowupLabels
  *= require lib/font-awesome.min
  *= require font-awesome
- *= require 'new'
+ *= require 'main'
  *= require fancybox
+ *= require select2
  */

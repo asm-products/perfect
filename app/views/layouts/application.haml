@@ -3,16 +3,19 @@
   %head
     %title Perfect
     = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
     = csrf_meta_tags
     = favicon_link_tag 'perfectfav.ico'
     %link{href: "https://fonts.googleapis.com/css?family=Montserrat+Alternates", rel: "stylesheet", type: "text/css"}/
     %script{src: 'https://checkout.stripe.com/checkout.js'}
+    =  javascript_include_tag "application"
+    %meta{:name => "viewport", :content => "width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes"}
     =render :partial => 'layouts/meta_content'
   %body
     .flash-wrapper
       -flash.each do |key, value|
         %div{class: "flash #{key}"}=value
       .flash.js
-    = yield
-    =# javascript_include_tag "bottom"
+    #perfect
+      = yield
+    #stripe_key{data:{key: ENV['STRIPE_API_KEY']}}
+    =javascript_include_tag "bottom"

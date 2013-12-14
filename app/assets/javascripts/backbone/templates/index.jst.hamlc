@@ -1,0 +1,60 @@
+#home.page
+  .branding-mobile
+    .logotype
+      Perfect
+    .subheader
+      Send postcards in the mail with ease
+  .card
+    .left
+      &nbsp;
+      .inner
+        %textarea.message.placeholder{maxlength: 300, name: 'postcard[message]', required: true}
+    .right
+      .inner
+        .stamp
+          P
+        .lines
+          %form.FlowupLabels{method: 'POST'}
+            .field
+              %label{for: 'address[name]'} Name
+              %input{name: 'address[name]', required: true, value: '', type: 'text'}
+            .field
+              %label{for: 'address[line1]'} Address Line 1
+              %input{name: 'address[line1]', required: true, value: '', type: 'text'}
+            .field
+              %label{for: 'address[line2]'} Address Line 2
+              %input{name: 'address[line2]', value: '', type: 'text'}
+            .line
+              .field.inline.city
+                %label{for: 'address[city]'} City
+                %input.inline{name: 'address[city]', required: true, value: '', type: 'text'}
+              .field.inline.state
+                %select#state{name: 'address[subregion]'}
+                  -for state in @states
+                    -if state[1] == "NY"
+                      %option{value: state[1], selected: true}=state[0]
+                    -else
+                      %option{value: state[1]}=state[0]
+              .field.inline.country
+                %select#country{name: 'address[country]'}
+                  -for country in @countries
+                    -if country[1] == "US"
+                      %option{value: country[1], selected: true}=country[0]
+                    -else
+                      %option{value: country[1]}=country[0]
+            .clear
+            .field
+              %label{for: 'address[zip]'} Zip
+              %input{name: 'address[zip]', required: 'true', type: 'tel'}
+  %br 
+  %br
+  .clear
+  .pick-front
+    %a{href: '#options'}
+      %button.button
+        .text Pick the front
+  .branding-desktop
+    .logotype
+      Perfect
+    .subheader
+      Send postcards in the mail with ease

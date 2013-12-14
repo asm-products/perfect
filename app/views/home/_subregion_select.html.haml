@@ -1,0 +1,8 @@
+- parent_region ||= params[:parent_region] ? params[:parent_region] : 'US'
+- country = Carmen::Country.coded(parent_region)
+- if country.nil?
+  %em Please select a country above
+- elsif country.subregions?
+  =select_tag :state, options_for_select(Carmen::Country.coded(parent_region).subregions.map{|c| [c.name, c.code]}, (params[:state].present? ? params[:state] : ['New York', 'NY']))
+- else
+  = text_field(:state, :state) 

@@ -1,71 +1,15 @@
-.reveal
-  .slides
-    %section
-      %h1 Perfect
-      %p Send a postcard with ease.
-      %h4 $2 to the US | $3 to everywhere else
-      %button.zbutton.next Get Started
-
-    %section.all-cards{data: {current: 0}}
-      -card_categories.each do |category|
-        -available_cards(category).each_slice(4).with_index do |row, i|
-          %section.card-section{data: {background: category_background(category)}}
-            %h3 Choose a card
-            %button.zbutton.small.prev Or go back
-            .category-titles
-              .previous-page
-                %i.fa.fa-arrow-circle-o-left
-              .category-name
-                =category_name(category, i)
-              .next-page
-                %i.fa.fa-arrow-circle-o-right
-            .cards
-              -row.each do |card|
-                %img.card{src: "https://s3.amazonaws.com/post-perfect/#{card.key[0..-5]}.png?AWSAccessKeyId=#{ENV['AWS_KEY_ID']}"}
-
-    %section
-      %h3 Write your message
-      %button.zbutton.small.prev Or go back
-      %textarea.message#message{name: 'message', required: 'required', maxlength: 300}
-        =params[:final_message].present? ? params[:final_message] : ""
-      %button.zbutton.where Where should we send it?
-
-    %section
-      %h3 Tell us who it's going to
-      %button.zbutton.small.prev Or go back
-      =form_tag make_postcard_path, class: 'destination', parsley: {validate: true} do
-        .field
-          =label_tag :name
-          =text_field_tag :name, params[:name], required: :required
-        .field
-          =label_tag :address1, 'Address Line 1'
-          =text_field_tag :address1, params[:address1], required: :required
-        .field
-          =label_tag :address2, 'Address Line 2'
-          =text_field_tag :address2, params[:address2]
-        .field
-          =label_tag :city
-          =text_field_tag :city, params[:city], required: :required
-        .field
-          =label_tag :state
-          =text_field_tag :state, params[:state], required: :required
-        .field
-          =label_tag :country
-          =select_tag :country, options_for_select(Carmen::Country.all.map{|c| [c.name, c.code]}, (params[:country].present? ? params[:country] : ['United States', 'US']))
-        .field
-          =label_tag :zip
-          =text_field_tag :zip, params[:zip], required: :required
-        .field
-          =label_tag :email, 'Your Email'
-          =text_field_tag :email, params[:email], required: :required, id: :email
-        .field
-          =label_tag :discount, 'Discount Code'
-          =text_field_tag :discount
-        =hidden_field_tag :photo_chosen, params[:photo_chosen], class: 'photo-chosen'
-        =hidden_field_tag :final_message, params[:final_message], class: 'final-message'
-        =hidden_field_tag :payment_token
-
-        %button.zbutton.purchase Send now
-
-%a.fancybox{data: {fancybox_type: 'iframe'}, href: '/share'}
-=hidden_field_tag :stripe_key, nil, data: {key: ENV['STRIPE_API_KEY']}
+:javascript
+  $(function() {
+    window.router = new Perfect.Routers.PerfectRouter({
+      posts: []
+    });
+    indexView = new Perfect.Views.IndexView({
+      el: $("#perfect"),
+      states: #{Carmen::Country.coded('US').subregions.map{|c| [c.name, c.code]}.to_json},
+      countries: #{Carmen::Country.all.map{|c| [c.name, c.code]}.to_json}
+    })
+    window.location = "#home"
+    postcards = new Perfect.Collections.PostcardsCollection
+    indexView.render()
+    Backbone.history.start();
+  });

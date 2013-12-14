@@ -15,9 +15,19 @@ gem 'aws-sdk'
 
 gem 'jquery-ui-rails'
 
+gem "select2-rails"
 
+gem 'devise'
+
+gem 'ejs'
+gem 'rails-backbone'
+
+gem 'paperclip'
+gem "rmagick", "2.13.2", :require => 'RMagick'
+gem 'cocaine'
 group :development do
   gem 'sqlite3'
+  gem 'debugger'
 end
 
 group :production do
@@ -38,4 +48,6 @@ group :assets do
   gem 'modernizr-rails'
   gem 'font-awesome-rails'
   gem 'fancybox2-rails', '~> 0.2.4'
+  gem 'haml_coffee_assets'
+  gem 'execjs'
 end

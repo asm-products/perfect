@@ -2,54 +2,19 @@ var handler = StripeCheckout.configure({
   key: $("#stripe_key").data('key'),
   image: '/assets/square-image.png',
   token: function(token, args) {
-    $("#payment_token").val(token.id)
+    $("form").append("<input type='hidden' value='"+token.id+"' name='payment_token'>")
     maskLoad()
-    $(".destination").submit()
-  }
+    $("form").submit()
+  },
+  panelLabel: "Send Postcard"
+
 });
 
-$(".purchase").click( function(e){
-  e.preventDefault()
-  if(allOptionsComplete()){
-    amount = calculate_amount()
-    if($("#discount").val() != ""){
-      $.get('/check_discount', {discount: $("#discount").val()}
-      ).done(function(data){
-        if(!$.isEmptyObject(data)){
-          amount = apply_discount(data, amount)
-          run_card(amount)
-          js_flash('Discount code ' + data.code + ' applied!')
-        }else{
-          $("#discount").val('')
-          js_flash('Discount code invalid.')
-        }
-      })
-    }else{
-      run_card(amount)
-    }
-
-  }
-})
-
-function run_card(amount){
+function run_card(postcards){
+  amount = postcards.models[0].attributes["address[country]"] == "US" ? 200 : 300
   handler.open({
     name: 'postperfect.co',
     description: '1 postcard',
-    amount: amount,
-    email: $("#email").val()
+    amount: amount
   });
-}
-
-function calculate_amount(){
-  if($("#country").val() == "US"){
-    return 200
-  }else{
-    return 300
-  }
-}
-
-function apply_discount(object, price){
-  if(object.dtype == 'percent'){
-    return parseFloat(price)*(parseFloat(1-(object.amount/100)))
-  }
 }

@@ -71,5 +71,7 @@ module Perfect
     config.assets.version = '1.0'
 
     config.assets.precompile += ["bottom.js"]
+
+    config.autoload_paths += Dir["#{config.root}/lib", "#{config.root}/lib/**/"]
   end
 end
