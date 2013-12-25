@@ -15,7 +15,6 @@ gem 'aws-sdk'
 
 gem 'jquery-ui-rails'
 
-gem "select2-rails"
 
 gem 'devise'
 
@@ -42,7 +41,8 @@ group :development, :test do
 end
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+gem "select2-rails"
+  gem "sass", "~> 3.2.5"
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'modernizr-rails'

@@ -18,18 +18,19 @@
 #= require jquery.ui.draggable
 #= require lib/listen_for_change
 
-#= require javascript_flash
+
 #= require mask_loading
 
-#= require select2
+
 #= require underscore
 #= require backbone
 #= require hamlcoffee
 #= require lib/jquery.FlowupLabels
 #= require fancybox
 
+#= require select2
 #= require backbone/perfect
-
+#= require javascript_flash
 #= require_self
 
   #   Views = {

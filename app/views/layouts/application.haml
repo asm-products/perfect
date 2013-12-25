@@ -2,10 +2,11 @@
 %html
   %head
     %title Perfect
-    = stylesheet_link_tag    "application", :media => "all"
     = csrf_meta_tags
     = favicon_link_tag 'perfectfav.ico'
     %link{href: "https://fonts.googleapis.com/css?family=Montserrat+Alternates", rel: "stylesheet", type: "text/css"}/
+    %link{href: "https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900", rel: "stylesheet", type: "text/css"}/
+    = stylesheet_link_tag    "application", :media => "all"
     %script{src: 'https://checkout.stripe.com/checkout.js'}
     =  javascript_include_tag "application"
     %meta{:name => "viewport", :content => "width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes"}
@@ -14,7 +15,6 @@
     .flash-wrapper
       -flash.each do |key, value|
         %div{class: "flash #{key}"}=value
-      .flash.js
     #perfect
       = yield
     #stripe_key{data:{key: ENV['STRIPE_API_KEY']}}

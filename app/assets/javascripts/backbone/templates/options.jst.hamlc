@@ -4,8 +4,8 @@
       %button.button
         .text Upload an Image
       %input.upload{type: 'file', name: '[postcard]image'}
-      %button.button.steal
-        .text Steal One of Ours
+      / %button.button.steal
+      /   .text Steal One of Ours
   .clear
   %a{href: "#home"}
     %i.fa.fa-arrow-left.back
