@@ -6,8 +6,12 @@ function js_flash(msg, type, delay){
   }else{
     klass = "alert"
   }
+  if($(".flash.notice").length == 0){
+    $(".flash-wrapper").append("<div class='flash notice'/>")
+  }
   $(".flash.notice").html(msg).addClass(klass).parent().addClass(klass).slideDown()
   setTimeout(function(){$(".flash.js").parent().fadeOut(4000)}, 4000)
+  return true
 }
 
 //Hide the flash after ten seconds

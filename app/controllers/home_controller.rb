@@ -55,7 +55,7 @@ class HomeController < ApplicationController
     token = params[:payment_token]
     price = params[:address][:country] == "US" ? 200 : 300 
 
-    # price = discount.calculate_discount_price(price) if discount
+    price = discount.calculate_discount_price(price) if discount
 
     if price == 0
       flash[:notice] = "Your free post card is on the way. It should arrive in a few days!"
