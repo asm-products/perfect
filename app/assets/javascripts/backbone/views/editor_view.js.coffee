@@ -11,7 +11,8 @@ class Perfect.Views.EditorView extends Backbone.View
   render : ->
     $(@el).html(@template())
     @show_thumbnail(postcards.models[0].attributes.image.files[0])
-    
+    @setup_stripe()
+
   show_thumbnail: (file) ->
     that = @
     if !file.type.match(/image.*/)
@@ -70,21 +71,31 @@ class Perfect.Views.EditorView extends Backbone.View
 
   checkout: ->
     that = @
-    if $("form").length == 0
-      $.each @image_information(), (i, v)-> that.postcard.set i, v
-      @form_builder()
-    run_card(postcards)
+    @run_card postcards
   
-  form_builder: ->
+  send_card: ->
     that = @
-    $("body").append('<form enctype="multipart/form-data" action="/make_postcard" method="POST" style="display: none"/>')
     @$form = $("form")
-    $.each @postcard.attributes, (i, v)->
-      if $("[name='#{i}']").length == 0
-        if i == 'image' then that.$form.append(v) else that.$form.append("<input type='hidden' value='#{v}' name='#{i}'>")
-      else
-        if i == 'image'
-          that.$form.append(v)
-        else
-          $("[name='#{i}']").val(v)
+    $.each @image_information(), (i, v)-> that.postcard.set i, v
+    $.each @postcard.attributes, (i, v)-> if i == 'image' then that.$form.append(v) else that.$form.append("<input type='hidden' value='#{v}' name='#{i}'>")
     @$form.append("<input type='hidden' value='#{$('meta[name="csrf-token"]').attr("content")}' name='authenticity_token'>")
+    maskLoad()
+    @$form.submit()
+
+  setup_stripe: ->
+    that = @
+    @handler = StripeCheckout.configure
+      key: $("#stripe_key").data("key")
+      image: "/assets/square-image.png"
+      token: (token, args) ->
+        $("body").append('<form enctype="multipart/form-data" action="/make_postcard" method="POST" style="display: none"/>')
+        $("form").append "<input type='hidden' value='" + token.id + "' name='payment_token'>"
+        that.send_card()
+      panelLabel: "Send Postcard"
+
+  run_card: ->
+    amount = (if postcards.models[0].attributes["address[country]"] is "US" then 200 else 300)
+    @handler.open
+      name: "postperfect.co"
+      description: "1 postcard"
+      amount: amount
