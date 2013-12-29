@@ -16,19 +16,28 @@ class Perfect.Views.IndexView extends Backbone.View
 
   render : ->
     $(@el).html(@template(states: @states, countries: @countries))
-    @setup_messages()
-    @setup_textarea_preview() if $(".message").val() == ""
+    @setup_initial_message() if $(".message").val() == ""
     @country_select_two()
     @state_select_two()
     @flow_up_labels()
     $(".pick-front").fadeIn('900') if $("input").first().val() != ""
     $("form").listenForChange()
 
-  setup_messages: ->
+  setup_initial_message: ->
+    that = @
     message_1 = "Hey Mom!\n\nI'm having an amazing time here in Paris. The food is great, if a bit buttery. You and Dad would absolutely love the Arc de triomphe, the delicious La Coupole, and of course the Eiffel Tower. Au revoir! \n\nSally"
     message_2 = "Hi Sally,\n\nYour Dad and I are quite jealous of this Eurotrip that you're on. We're so happy that you're having a great time though! The view from the Eiffel Tower looks wonderful. All of our love to you and John,\n\nMom and Dad"
     message_3 = "Brad:\n\nIt was a pleasure meeting up last week in LA. I'm excited to discuss further possibilities for a potential partnership between ACME and RANDOM Corp. Happy Holidays!\n\nWilly Wonka"
-    @messages = [message_1, message_2, message_3]
+    init_message = "Start by typing your message here, like so!"
+    if $("textarea").val() == ""  
+      $("textarea").val(init_message)
+      setTimeout ()-> 
+        that.setup_textarea_preview([message_1, message_2, message_3])
+      , 3000
+
+  setup_textarea_preview: (messages) ->
+    $("textarea").fadeOut('1000', ()-> $(this).val(messages[parseInt(Math.random()*3)]).hide().fadeIn('2000'))
+
 
   country_select_two: ->
     that = @
@@ -36,7 +45,7 @@ class Perfect.Views.IndexView extends Backbone.View
       $("#s2id_country a.select2-choice .select2-chosen").text $(this).val()
       $("#s2id_state").load "/subregion_options?parent_region=" + $(this).val(), ->
         $(this).children(":first").unwrap()
-        that.state_select_two()
+        # that.state_select_two()
     ).trigger "change"
 
   state_select_two: ->
@@ -77,8 +86,6 @@ class Perfect.Views.IndexView extends Backbone.View
   show_next_click: ->
     $(".pick-front").click()
 
-  setup_textarea_preview: ->
-    $("textarea").val(@messages[parseInt(Math.random()*3)])
 
   trigger_focus: (e) ->
     $(e.currentTarget).focus()
