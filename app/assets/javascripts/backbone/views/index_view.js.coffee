@@ -29,10 +29,11 @@ class Perfect.Views.IndexView extends Backbone.View
     message_2 = "Hi Sally,\n\nYour Dad and I are quite jealous of this Eurotrip that you're on. We're so happy that you're having a great time though! The view from the Eiffel Tower looks wonderful. All of our love to you and John,\n\nMom and Dad"
     message_3 = "Brad:\n\nIt was a pleasure meeting up last week in LA. I'm excited to discuss further possibilities for a potential partnership between ACME and RANDOM Corp. Happy Holidays!\n\nWilly Wonka"
     init_message = "Start by typing your message here, like so!"
+    @messages = [message_1, message_2, message_3]
     if $("textarea").val() == ""  
       $("textarea").val(init_message)
       setTimeout ()-> 
-        that.setup_textarea_preview([message_1, message_2, message_3])
+        that.setup_textarea_preview(that.messages)
       , 3000
 
   setup_textarea_preview: (messages) ->
