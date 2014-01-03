@@ -77,7 +77,13 @@ class Perfect.Views.EditorView extends Backbone.View
     that = @
     @$form = $("form")
     $.each @image_information(), (i, v)-> that.postcard.set i, v
-    $.each @postcard.attributes, (i, v)-> if i == 'image' then that.$form.append(v) else that.$form.append("<input type='hidden' value='#{v}' name='#{i}'>")
+    $.each @postcard.attributes, (i, v)->
+      if i == 'image' 
+        that.$form.append(v)
+      else if i == 'postcard[message]'
+        that.$form.append("<textarea name='#{i}'>#{v}</textarea>")
+      else
+        that.$form.append("<input type='hidden' value='#{v}' name='#{i}'>")
     @$form.append("<input type='hidden' value='#{$('meta[name="csrf-token"]').attr("content")}' name='authenticity_token'>")
     maskLoad()
     @$form.submit()

@@ -18,4 +18,9 @@
     #perfect
       = yield
     #stripe_key{data:{key: ENV['STRIPE_API_KEY']}}
+    #contact
+      =link_to "Questions?", "mailto:admin@postperfect.co"
+      .by
+        By 
+        =link_to "@zachfeldman", "https://twitter.com/zachfeldman"
     =javascript_include_tag "bottom"
