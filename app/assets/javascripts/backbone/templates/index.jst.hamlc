@@ -29,12 +29,7 @@
                 %label{for: 'address[city]'} City
                 %input.inline{name: 'address[city]', required: true, value: '', type: 'text'}
               .field.inline.state
-                %select#state{name: 'address[subregion]'}
-                  -for state in @states
-                    -if state[1] == "NY"
-                      %option{value: state[1], selected: true}=state[0]
-                    -else
-                      %option{value: state[1]}=state[0]
+                .selector
               .field.inline.country
                 %select#country{name: 'address[country]'}
                   -for country in @countries

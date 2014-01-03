@@ -16,12 +16,24 @@ class Perfect.Views.IndexView extends Backbone.View
 
   render : ->
     $(@el).html(@template(states: @states, countries: @countries))
+    @cached_subregion_activated = false
     @setup_initial_message() if $(".message").val() == ""
+    if postcards.models.length > 0
+      @initial_country_select_two = false
+      @setup_saved_country_state()
+    else
+      @initial_country_select_two = true
     @country_select_two()
     @state_select_two()
     @flow_up_labels()
     $(".pick-front").fadeIn('900') if $("input").first().val() != ""
     $("form").listenForChange()
+
+  setup_saved_country_state: ->
+    $("#country").val(postcards.models[0].attributes['address[country]'])
+    setTimeout(
+      ()-> $("#country").trigger('change')
+    , 200)
 
   setup_initial_message: ->
     that = @
@@ -30,7 +42,7 @@ class Perfect.Views.IndexView extends Backbone.View
     message_3 = "Brad:\n\nIt was a pleasure meeting up last week in LA. I'm excited to discuss further possibilities for a potential partnership between ACME and RANDOM Corp. Happy Holidays!\n\nWilly Wonka"
     init_message = "Start by typing your message here, like so!"
     @messages = [message_1, message_2, message_3]
-    if $("textarea").val() == ""  
+    if $("textarea").val() == "" && postcards.models.length == 0
       $("textarea").val(init_message)
       setTimeout ()-> 
         that.setup_textarea_preview(that.messages)
@@ -44,14 +56,22 @@ class Perfect.Views.IndexView extends Backbone.View
     that = @
     $("#country").select2(dropdownAutoWidth: true).change(->
       $("#s2id_country a.select2-choice .select2-chosen").text $(this).val()
-      $("#s2id_state").load "/subregion_options?parent_region=" + $(this).val(), ->
-        $(this).children(":first").unwrap()
-        # that.state_select_two()
-    ).trigger "change"
+      $(".state .selector, .state #address_subregion").load "/subregion_options?parent_region=" + $(this).val(), (e) ->
+        that.state_select_two() if e.indexOf('option') != -1
+        if postcards.models.length > 0
+          setTimeout ()->
+            $("[name='address[subregion]']").val(postcards.models[0].attributes['address[subregion]']).trigger('change') if !that.cached_subregion_activated
+            that.cached_subregion_activated = true
+          , 300
+    )
+    if @initial_country_select_two
+      $("#country").trigger "change"
+      @initial_county_select_two = false 
+
 
   state_select_two: ->
-    $("#state").select2(dropdownAutoWidth: true).change(->
-      $("#s2id_state a.select2-choice .select2-chosen").text $(this).val()
+    $("#address_subregion").select2(dropdownAutoWidth: true).change((e)->
+      $("#s2id_address_subregion a.select2-choice .select2-chosen").text $(this).val()
     ).trigger "change"
 
   flow_up_labels: ->
