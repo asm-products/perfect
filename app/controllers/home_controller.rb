@@ -17,7 +17,7 @@ class HomeController < ApplicationController
   end
 
   def make_postcard
-    send_card if (discount.present? && discount.dtype == "percent" && discount.amount == 100.0) || charge_card
+    send_card if free_card || charge_card
     respond_to do |format|
       format.json{ render json: {status: 200} }
       format.html{ redirect_to root_path(sanitized_params) }
@@ -51,30 +51,48 @@ class HomeController < ApplicationController
     @discount ||= Discount.find_by_code(params[:code].upcase)
   end
 
-  def charge_card
-    token = params[:payment_token]
-    price = params[:address][:country] == "US" ? 200 : 300 
-
-    price = discount.calculate_discount_price(price) if discount
-
-    if price == 0
-      flash[:notice] = "Your free post card is on the way. It should arrive in a few days!"
+  def free_card
+    if discount.present? && discount.dtype == "percent" && discount.amount == 100.0 && discount.uses > 0
+      discount.uses -= 1
+      discount.save
+      return true
+    elsif discount.present? && discount.uses <= 0
+      flash[:notice] = "Sorry, your discount was invalid."
+      return false
     else
-      begin
-        customer = Stripe::Customer.create(
-          :card => token
-        )
+      return false
+    end
+  end
 
-        charge = Stripe::Charge.create(
-          :amount => price,
-          :currency => "usd",
-          :customer => customer.id,
-          :description => params[:email]
-        )
+  def charge_card
 
-      rescue Stripe::CardError => e
-        flash[:alert] = "Your credit card was declined. Please try again with a different card."
+    token = params[:payment_token]
+    if token.present?
+      price = params[:address][:country] == "US" ? 200 : 300 
+
+      price = discount.calculate_discount_price(price) if discount
+
+      if price == 0
+        flash[:notice] = "Your free post card is on the way. It should arrive in a few days!"
+      else
+        begin
+          customer = Stripe::Customer.create(
+            :card => token
+          )
+
+          charge = Stripe::Charge.create(
+            :amount => price,
+            :currency => "usd",
+            :customer => customer.id,
+            :description => params[:email]
+          )
+
+        rescue Stripe::CardError => e
+          flash[:alert] = "Your credit card was declined. Please try again with a different card."
+        end
       end
+    else
+      return false
     end
   end
 
