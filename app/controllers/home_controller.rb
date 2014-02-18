@@ -17,7 +17,7 @@ class HomeController < ApplicationController
   end
 
   def make_postcard
-    send_card if charge_card
+    send_card if (discount.present? && discount.dtype == "percent" && discount.amount == 100.0) || charge_card
     respond_to do |format|
       format.json{ render json: {status: 200} }
       format.html{ redirect_to root_path(sanitized_params) }
@@ -48,7 +48,7 @@ class HomeController < ApplicationController
   private
 
   def discount
-    @discount ||= Discount.find_by_code(params[:discount])
+    @discount ||= Discount.find_by_code(params[:code].upcase)
   end
 
   def charge_card

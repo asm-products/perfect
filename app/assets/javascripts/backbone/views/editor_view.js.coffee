@@ -12,6 +12,7 @@ class Perfect.Views.EditorView extends Backbone.View
     $(@el).html(@template())
     @show_thumbnail(postcards.models[0].attributes.image.files[0])
     @setup_stripe()
+    @$discount_code = @$(".discount-code")
 
   show_thumbnail: (file) ->
     that = @
@@ -71,13 +72,14 @@ class Perfect.Views.EditorView extends Backbone.View
 
   checkout: ->
     that = @
-    @run_card postcards
+    @check_discount_code(@$discount_code.val())
   
   send_card: ->
     that = @
+    $("body").append('<form enctype="multipart/form-data" action="/make_postcard" method="POST" style="display: none"/>') if $("form").length == 0
     @$form = $("form")
-    $.each @image_information(), (i, v)-> that.postcard.set i, v
-    $.each @postcard.attributes, (i, v)->
+    $.each @image_information(), (i, v)-> postcards.models[0].set i, v
+    $.each postcards.models[0].attributes, (i, v)->
       if i == 'image' 
         that.$form.append(v)
       else if i == 'postcard[message]'
@@ -85,6 +87,7 @@ class Perfect.Views.EditorView extends Backbone.View
       else
         that.$form.append("<input type='hidden' value='#{v}' name='#{i}'>")
     @$form.append("<input type='hidden' value='#{$('meta[name="csrf-token"]').attr("content")}' name='authenticity_token'>")
+    @$form.append("<input type='hidden' value='#{@$discount_code.val()}' name='code'>")
     maskLoad()
     @$form.submit()
 
@@ -99,9 +102,30 @@ class Perfect.Views.EditorView extends Backbone.View
         that.send_card()
       panelLabel: "Send Postcard"
 
-  run_card: ->
-    amount = (if postcards.models[0].attributes["address[country]"] is "US" then 200 else 300)
-    @handler.open
-      name: "postperfect.co"
-      description: "1 postcard"
-      amount: amount
+  check_discount_code: (code) ->
+    console.log(code)
+    that = @
+    if code != undefined || code != ""
+      $.post("/check_discount", {code: code.toUpperCase()}).done($.proxy((data)->
+        that.run_card(data)
+      ), that)
+    else
+      @run_card()
+
+  run_card: (discount) ->
+    that = @
+    if discount.dtype == "cost"
+      amount = if postcards.models[0].attributes["address[country]"] is "US" then 128 else 207
+    else if discount.dtype == "percent"
+      amount = if postcards.models[0].attributes["address[country]"] is "US" then 200*(discount.amount/100) else 300*(discount.amount/100)
+    else
+      amount = if postcards.models[0].attributes["address[country]"] is "US" then 200 else 300
+    if discount.dtype == "percent" && discount.amount == 100.0
+      console.log("test1")
+      @send_card()
+    else
+      console.log("test2")
+      @handler.open
+        name: "postperfect.co"
+        description: "1 postcard"
+        amount: amount

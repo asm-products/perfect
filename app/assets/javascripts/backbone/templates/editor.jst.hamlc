@@ -6,5 +6,6 @@
     %i.fa.fa-minus-square.zoom-out
     %button.button.looks-good
       .text Looks good to me
+    %input.discount-code{type: "text", placeholder: "discount code"}
     %a{href: "#options"}
       %i.fa.fa-arrow-left.back

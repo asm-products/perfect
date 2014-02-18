@@ -7,7 +7,7 @@ Perfect::Application.routes.draw do
 
   # get '/share' => 'home#share'
   
-  # get '/check_discount' => 'home#check_discount'
+  post '/check_discount' => 'home#check_discount'
 
   get '/subregion_options' => 'home#subregion_options'
   get '/card_set' => 'home#card_set'
