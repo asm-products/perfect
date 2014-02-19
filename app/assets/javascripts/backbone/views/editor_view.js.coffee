@@ -104,7 +104,7 @@ class Perfect.Views.EditorView extends Backbone.View
 
   check_discount_code: (code) ->
     that = @
-    if code != undefined || code != ""
+    if code != "" 
       $.post("/check_discount", {code: code.toUpperCase()}).done($.proxy((data)->
         that.run_card(data)
       ), that)
@@ -113,19 +113,25 @@ class Perfect.Views.EditorView extends Backbone.View
 
   run_card: (discount) ->
     that = @
-    if $.isEmptyObject(discount) || discount.uses <= 0
-      js_flash("Sorry, your discount code was invalid.")
-    else
-      if discount.dtype == "cost"
+    no_handler = false
+    console.log(discount)
+    if discount != undefined
+      if $.isEmptyObject(discount) || discount.uses <= 0
+        js_flash("Sorry, your discount code was invalid.")
+        amount = if postcards.models[0].attributes["address[country]"] is "US" then 200 else 300
+      else if discount.dtype == "cost"
         amount = if postcards.models[0].attributes["address[country]"] is "US" then 128 else 207
       else if discount.dtype == "percent"
-        amount = if postcards.models[0].attributes["address[country]"] is "US" then 200*(discount.amount/100) else 300*(discount.amount/100)
-      else
-        amount = if postcards.models[0].attributes["address[country]"] is "US" then 200 else 300
-      if discount.dtype == "percent" && discount.amount == 100.0
-        @send_card()
-      else
-        @handler.open
-          name: "postperfect.co"
-          description: "1 postcard"
-          amount: amount
+        if discount.amount == 100
+          no_handler = true
+          @send_card()
+        else
+          amount = if postcards.models[0].attributes["address[country]"] is "US" then 200*(discount.amount/100) else 300*(discount.amount/100)
+      
+    else
+      amount = if postcards.models[0].attributes["address[country]"] is "US" then 200 else 300
+    if !no_handler
+      @handler.open
+        name: "postperfect.co"
+        description: "1 postcard"
+        amount: amount
